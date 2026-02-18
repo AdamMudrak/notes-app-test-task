@@ -42,3 +42,5 @@ docker compose up -d --build
 After startup, open: [Swagger UI](http://localhost:8080/swagger-ui/index.html)
 
 For authorization, use: `username: user1, password: password1` or `username: user2, password: password2`
+
+Note that you need to deactivate [seeder](src/main/java/org/example/notes_app/config/DataSeederConfig.java) before moving this app to production.
