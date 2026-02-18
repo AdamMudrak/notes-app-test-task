@@ -25,10 +25,8 @@ public class DataSeederConfig {
     CommandLineRunner seedNotes() {
         return args -> {
 
-            // prevent duplicating data every restart
             noteRepository.deleteAll();
 
-            // -------- user1 --------
             Note u1n1 = new Note();
             u1n1.setTitle("Quarterly budget review");
             u1n1.setText("Check department expenses, adjust forecasts and prepare finance summary");
@@ -62,10 +60,8 @@ public class DataSeederConfig {
             u1n5.setText("Add distributed systems book, clean architecture guide and productivity notes");
             u1n5.setCreatedDateTime(LocalDateTime.now().minusDays(1));
             u1n5.setUsername("user1");
-            u1n5.setTags(Set.of()); // intentionally empty tags
+            u1n5.setTags(Set.of());
 
-
-            // -------- user2 --------
             Note u2n1 = new Note();
             u2n1.setTitle("Server migration checklist");
             u2n1.setText("Backup database, verify docker images, run smoke tests and update DNS");
@@ -99,8 +95,7 @@ public class DataSeederConfig {
             u2n5.setText("Ideas about weekend photography, cooking experiments and travel destinations");
             u2n5.setCreatedDateTime(LocalDateTime.now());
             u2n5.setUsername("user2");
-            u2n5.setTags(Set.of(Tag.PERSONAL, Tag.BUSINESS, Tag.IMPORTANT)); // all tags
-
+            u2n5.setTags(Set.of(Tag.PERSONAL, Tag.BUSINESS, Tag.IMPORTANT));
 
             noteRepository.saveAll(List.of(
                     u1n1, u1n2, u1n3, u1n4, u1n5,
