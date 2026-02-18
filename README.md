@@ -44,3 +44,8 @@ After startup, open: [Swagger UI](http://localhost:8080/swagger-ui/index.html)
 For authorization, use: `username: user1, password: password1` or `username: user2, password: password2`
 
 Note that you need to deactivate [seeder](src/main/java/org/example/notes_app/config/DataSeederConfig.java) before moving this app to production.
+
+## Things to consider
+
+To complete this task, I thought of the architecture myself and wrote core business logic.
+Used AI or google for MongoDB (never worked before), used AI for generating seeders and test data;
