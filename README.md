@@ -31,6 +31,9 @@ Spring Boot + MongoDB application that allows a user to store everyday notes.
 
 ---
 
+## Check remote [swagger](https://test-task.adammudrak.space/swagger-ui/index.html) if you don't want to run locally
+
+
 ## Run Locally (Docker)
 
 From the project root:
@@ -48,4 +51,12 @@ Note that you need to deactivate [seeder](src/main/java/org/example/notes_app/co
 ## Things to consider
 
 To complete this task, I thought of the architecture myself and wrote core business logic.
-Used AI or google for MongoDB (never worked before), used AI for generating seeders and test data;
+Used AI and google for MongoDB (never worked before), used AI for generating seeders and test data;
+
+Also, I'd like to point out that in this task, I didn't use JWT authentication stored safely in cookies,
+didn't cover all possible edge cases, and didn't implement even basic security measures (like not exposing .env)
+because this seems to be out of scope for a test task. Idea was to showcase the ability to use Spring Boot 
+and MongoDB, providing quick proof-of-concept drafts;
+
+If you would like to see more advanced security, scheduled email senders, registration via confirmation, etc., kindly visit my [portfolio](https://landing.adammudrak.space/)
+and check out my other projects.
