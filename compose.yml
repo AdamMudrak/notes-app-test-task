@@ -1,0 +1,34 @@
+services:
+  mongo:
+    image: mongo:7
+    container_name: notes-mongo
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpass
+      MONGO_INITDB_DATABASE: notesdb
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD-SHELL", "mongosh 'mongodb://root:rootpass@localhost:27017/admin' --quiet --eval 'db.runCommand({ ping: 1 }).ok' | grep 1 > /dev/null"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+    restart: unless-stopped
+
+  app:
+    build: .
+    container_name: notes-app
+    depends_on:
+      mongo:
+        condition: service_healthy
+    environment:
+      SPRING_APPLICATION_NAME: notes-app
+      SPRING_DATA_MONGODB_URI: mongodb://root:rootpass@mongo:27017/notesdb?authSource=admin
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
+volumes:
+  mongo_data:
