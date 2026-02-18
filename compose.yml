@@ -26,6 +26,7 @@ services:
     environment:
       SPRING_APPLICATION_NAME: notes-app
       SPRING_DATA_MONGODB_URI: mongodb://root:rootpass@mongo:27017/notesdb?authSource=admin
+      SERVER_PATH: http://localhost:8080
     ports:
       - "8080:8080"
     restart: unless-stopped

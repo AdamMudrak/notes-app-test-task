@@ -30,6 +30,8 @@ Spring Boot + MongoDB application that allows a user to store everyday notes.
 - OpenAPI/Swagger UI
 
 ---
+## Credentials
+For authorization, use: `username: user1, password: password1` or `username: user2, password: password2`
 
 ## Check remote [swagger](https://test-task.adammudrak.space/swagger-ui/index.html) if you don't want to run locally
 
@@ -43,8 +45,6 @@ docker compose up -d --build
 ```
 
 After startup, open: [Swagger UI](http://localhost:8080/swagger-ui/index.html)
-
-For authorization, use: `username: user1, password: password1` or `username: user2, password: password2`
 
 Note that you need to deactivate [seeder](src/main/java/org/example/notes_app/config/DataSeederConfig.java) before moving this app to production.
 
