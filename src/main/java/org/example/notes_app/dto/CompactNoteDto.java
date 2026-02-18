@@ -1,7 +1,7 @@
 package org.example.notes_app.dto;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public record CompactNoteDto(
         String title,
-        LocalDate createdDate) {}
+        LocalDateTime createdDateTime) {}

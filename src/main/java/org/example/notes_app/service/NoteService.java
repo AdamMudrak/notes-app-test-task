@@ -23,7 +23,7 @@ public class NoteService {
     public ResponseNoteDto createNote(String username, CreateNoteDto createNoteDto) {
         Note note = noteMapper.toEntity(createNoteDto);
         note.setUsername(username);
-        note.setCreatedDate(java.time.LocalDate.now());
+        note.setCreatedDateTime(java.time.LocalDateTime.now());
 
         return noteMapper.toDto(noteRepository.save(note));
     }
@@ -43,14 +43,13 @@ public class NoteService {
     }
 
     public List<ResponseNoteDto> getAllNotesByUsername(String username, FilterDto filterDto, Pageable pageable) {
-        List<Note> notes = noteRepository.findAllByUsernameAndTagsIn(username, filterDto.tags(), pageable);
-        notes.sort(Comparator.comparing(Note::getCreatedDate).reversed());
+        List<Note> notes = filterNotesIfNeeded(filterDto, username, pageable);
 
-        return noteMapper.toDtoList(notes);
+        return noteMapper.toDtoList(sortNotesByDate(notes));
     }
 
-    public List<CompactNoteDto> getAllCompactNotesByUsername(String username) {
-        return noteMapper.toCompactDtoList(noteRepository.findAllByUsername(username));
+    public List<CompactNoteDto> getAllCompactNotesByUsername(String username, Pageable pageable) {
+        return noteMapper.toCompactDtoList(noteRepository.findAllByUsername(username, pageable));
     }
 
     public NoteTextDto getNoteText(String username, String noteId) {
@@ -70,6 +69,22 @@ public class NoteService {
         return noteRepository.findByUsernameAndId(username, noteId).orElseThrow(
                 () -> new EntityNotFoundException("Note with id: " + noteId + " not found")
         );
+    }
+
+    private List<Note> filterNotesIfNeeded(FilterDto filterDto, String username, Pageable pageable) {
+        if (filterDto == null || filterDto.tags() == null || filterDto.tags().isEmpty()) {
+            return noteRepository.findAllByUsername(username, pageable);
+        } else {
+            return noteRepository.findAllByUsernameAndTagsContainsAny(
+                    username,
+                    filterDto.tags(),
+                    pageable
+            );
+        }
+    }
+
+    private List<Note> sortNotesByDate(List<Note> notes) {
+        return notes.stream().sorted(Comparator.comparing(Note::getCreatedDateTime).reversed()).toList();
     }
 
     private String replaceNonWordChars(String text) {
