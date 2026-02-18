@@ -92,9 +92,10 @@ public class NoteController {
     @Operation(summary = "Get compact notes", description = "The app should allow listing the notes showing only their "
             + "“Title” and “Created Date”.")
     List<CompactNoteDto> getAllCompactNotesByUsername(
-            @Parameter(hidden = true) @AuthenticationPrincipal UserDetails user
+            @Parameter(hidden = true) @AuthenticationPrincipal UserDetails user,
+            Pageable pageable
     ) {
-        return noteService.getAllCompactNotesByUsername(user.getUsername());
+        return noteService.getAllCompactNotesByUsername(user.getUsername(), pageable);
     }
 
     @GetMapping("/text/{noteId}")
