@@ -45,7 +45,7 @@ public class NoteService {
     public List<ResponseNoteDto> getAllNotesByUsername(String username, FilterDto filterDto, Pageable pageable) {
         List<Note> notes = filterNotesIfNeeded(filterDto, username, pageable);
 
-        return noteMapper.toDtoList(sortNotesByDate(notes));
+        return noteMapper.toDtoList(notes);
     }
 
     public List<CompactNoteDto> getAllCompactNotesByUsername(String username, Pageable pageable) {
@@ -81,10 +81,6 @@ public class NoteService {
                     pageable
             );
         }
-    }
-
-    private List<Note> sortNotesByDate(List<Note> notes) {
-        return notes.stream().sorted(Comparator.comparing(Note::getCreatedDateTime).reversed()).toList();
     }
 
     private String replaceNonWordChars(String text) {
